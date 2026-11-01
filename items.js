@@ -1,6 +1,6 @@
 // Cartly autofill dictionary (hidden list used only for suggestions).
 // Format per line:  department | unit | Hebrew name | English name
-// Departments: g = Grocery (מכולת), v = Fruit & Veg (ירקות ופירות), d = Drinks (משקאות), y = Dairy (מוצרי חלב), m = Meat & Fish (בשר ודגים), s = Spices (תבלינים)
+// Departments: g = Grocery (מכולת), v = Fruit & Veg (ירקות ופירות), d = Drinks (משקאות), y = Dairy (מוצרי חלב), m = Meat & Fish (בשר ודגים), s = Spices (תבלינים), c = Toiletries & Cleaning (טואלטיקה ומוצרי ניקיון)
 // Units: u = pcs (יח׳), kg = kg (ק״ג), g = grams (גרם), pk = pack (מארז)
 // To add an item later, just add a new line in the same format.
 const DICT_RAW = `
@@ -247,43 +247,43 @@ g|u|בצק עלים|Puff pastry
 g|pk|מלאווח|Malawach
 g|pk|ג׳חנון|Jachnun
 g|pk|קרטיבים|Popsicles
-g|pk|נייר טואלט|Toilet paper
-g|pk|מגבות נייר|Paper towels
-g|pk|מפיות|Napkins
-g|u|סבון כלים|Dish soap
-g|pk|טבליות למדיח|Dishwasher tablets
-g|u|אבקת כביסה|Laundry powder
-g|u|ג׳ל כביסה|Laundry gel
-g|u|מרכך כביסה|Fabric softener
-g|u|אקונומיקה|Bleach
-g|u|נוזל לניקוי רצפה|Floor cleaner
-g|pk|ספוגים|Sponges
-g|pk|מטליות|Cleaning cloths
-g|pk|שקיות זבל|Garbage bags
-g|u|נייר כסף|Aluminum foil
-g|u|ניילון נצמד|Plastic wrap
-g|u|נייר אפייה|Baking paper
-g|pk|שקיות אוכל|Food bags
-g|pk|כוסות חד פעמיות|Disposable cups
-g|pk|צלחות חד פעמיות|Disposable plates
-g|u|סבון|Soap
-g|u|סבון נוזלי|Liquid soap
-g|u|שמפו|Shampoo
-g|u|מרכך שיער|Conditioner
-g|u|משחת שיניים|Toothpaste
-g|u|מברשת שיניים|Toothbrush
-g|u|חוט דנטלי|Dental floss
-g|u|דאודורנט|Deodorant
-g|u|ג׳ל רחצה|Shower gel
-g|pk|סכיני גילוח|Razors
-g|u|קצף גילוח|Shaving foam
-g|pk|טישו|Tissues
-g|pk|מגבונים|Wet wipes
-g|u|צמר גפן|Cotton wool
-g|pk|מקלוני אוזניים|Cotton swabs
-g|u|קרם ידיים|Hand cream
-g|u|קרם הגנה|Sunscreen
-g|pk|חיתולים|Diapers
+c|pk|נייר טואלט|Toilet paper
+c|pk|מגבות נייר|Paper towels
+c|pk|מפיות|Napkins
+c|u|סבון כלים|Dish soap
+c|pk|טבליות למדיח|Dishwasher tablets
+c|u|אבקת כביסה|Laundry powder
+c|u|ג׳ל כביסה|Laundry gel
+c|u|מרכך כביסה|Fabric softener
+c|u|אקונומיקה|Bleach
+c|u|נוזל לניקוי רצפה|Floor cleaner
+c|pk|ספוגים|Sponges
+c|pk|מטליות|Cleaning cloths
+c|pk|שקיות זבל|Garbage bags
+c|u|נייר כסף|Aluminum foil
+c|u|ניילון נצמד|Plastic wrap
+c|u|נייר אפייה|Baking paper
+c|pk|שקיות אוכל|Food bags
+c|pk|כוסות חד פעמיות|Disposable cups
+c|pk|צלחות חד פעמיות|Disposable plates
+c|u|סבון|Soap
+c|u|סבון נוזלי|Liquid soap
+c|u|שמפו|Shampoo
+c|u|מרכך שיער|Conditioner
+c|u|משחת שיניים|Toothpaste
+c|u|מברשת שיניים|Toothbrush
+c|u|חוט דנטלי|Dental floss
+c|u|דאודורנט|Deodorant
+c|u|ג׳ל רחצה|Shower gel
+c|pk|סכיני גילוח|Razors
+c|u|קצף גילוח|Shaving foam
+c|pk|טישו|Tissues
+c|pk|מגבונים|Wet wipes
+c|u|צמר גפן|Cotton wool
+c|pk|מקלוני אוזניים|Cotton swabs
+c|u|קרם ידיים|Hand cream
+c|u|קרם הגנה|Sunscreen
+c|pk|חיתולים|Diapers
 g|u|אוכל לכלבים|Dog food
 g|u|אוכל לחתולים|Cat food
 m|kg|חזה עוף|Chicken breast
