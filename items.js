@@ -1,6 +1,6 @@
 // Cartly autofill dictionary (hidden list used only for suggestions).
 // Format per line:  department | unit | Hebrew name | English name
-// Departments: g = Grocery (מכולת), v = Greengrocery (ירקן), m = Meat & Fish (בשר ודגים), d = Drinks (משקאות), s = Spices (תבלינים)
+// Departments: g = Grocery (מכולת), v = Fruit & Veg (ירקות ופירות), d = Drinks (משקאות), y = Dairy (מוצרי חלב), m = Meat & Fish (בשר ודגים), s = Spices (תבלינים)
 // Units: u = pcs (יח׳), kg = kg (ק״ג), g = grams (גרם), pk = pack (מארז)
 // To add an item later, just add a new line in the same format.
 const DICT_RAW = `
@@ -94,37 +94,37 @@ v|kg|גויאבה|Guava
 v|kg|שסק|Loquat
 v|u|קוקוס|Coconut
 g|pk|תמרים|Dates
-g|u|חלב|Milk
-g|u|חלב 3%|Milk 3%
-g|u|חלב 1%|Milk 1%
-g|u|חלב סויה|Soy milk
-g|u|חלב שקדים|Almond milk
-g|u|חלב שיבולת שועל|Oat milk
-g|u|שוקו|Chocolate milk
-g|u|גבינה לבנה|White cheese
-g|u|קוטג׳|Cottage cheese
-g|u|גבינה צהובה|Yellow cheese
-g|pk|גבינה צהובה פרוסה|Sliced yellow cheese
-g|u|גבינת שמנת|Cream cheese
-g|u|גבינה בולגרית|Bulgarian cheese
-g|u|גבינת פטה|Feta cheese
-g|u|מוצרלה|Mozzarella
-g|pk|גבינה מגוררת|Grated cheese
-g|u|פרמזן|Parmesan
-g|u|לבנה|Labneh
-g|u|יוגורט|Yogurt
-g|u|יוגורט יווני|Greek yogurt
-g|u|מעדן|Pudding
-g|u|אשל|Eshel
-g|u|לבן|Leben
-g|u|שמנת חמוצה|Sour cream
-g|u|שמנת מתוקה|Whipping cream
-g|u|שמנת לבישול|Cooking cream
-g|u|חמאה|Butter
-g|u|מרגרינה|Margarine
-g|pk|ביצים|Eggs
-g|pk|ביצים L|Eggs L
-g|pk|ביצים XL|Eggs XL
+y|u|חלב|Milk
+y|u|חלב 3%|Milk 3%
+y|u|חלב 1%|Milk 1%
+y|u|חלב סויה|Soy milk
+y|u|חלב שקדים|Almond milk
+y|u|חלב שיבולת שועל|Oat milk
+y|u|שוקו|Chocolate milk
+y|u|גבינה לבנה|White cheese
+y|u|קוטג׳|Cottage cheese
+y|u|גבינה צהובה|Yellow cheese
+y|pk|גבינה צהובה פרוסה|Sliced yellow cheese
+y|u|גבינת שמנת|Cream cheese
+y|u|גבינה בולגרית|Bulgarian cheese
+y|u|גבינת פטה|Feta cheese
+y|u|מוצרלה|Mozzarella
+y|pk|גבינה מגוררת|Grated cheese
+y|u|פרמזן|Parmesan
+y|u|לבנה|Labneh
+y|u|יוגורט|Yogurt
+y|u|יוגורט יווני|Greek yogurt
+y|u|מעדן|Pudding
+y|u|אשל|Eshel
+y|u|לבן|Leben
+y|u|שמנת חמוצה|Sour cream
+y|u|שמנת מתוקה|Whipping cream
+y|u|שמנת לבישול|Cooking cream
+y|u|חמאה|Butter
+y|u|מרגרינה|Margarine
+y|pk|ביצים|Eggs
+y|pk|ביצים L|Eggs L
+y|pk|ביצים XL|Eggs XL
 g|u|לחם|Bread
 g|u|לחם אחיד|Standard bread
 g|u|לחם מלא|Whole wheat bread

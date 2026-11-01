@@ -167,7 +167,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   'use strict';
 
   // ---------- constants ----------
-  var DEPTS = ['g', 'v', 'm', 'd', 's'];
+  var DEPTS = ['g', 'v', 'd', 'y', 'm', 's'];
   var ACCENTS = [
     { c: '#2F7D4F', light: '#6CC28E', he: 'ירוק', en: 'Green' },
     { c: '#2563A8', light: '#86B6EE', he: 'כחול', en: 'Blue' },
@@ -179,7 +179,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   var T = {
     he: {
       dir: 'rtl',
-      dept: { g: 'מכולת', v: 'ירקן', m: 'בשר ודגים', d: 'משקאות', s: 'תבלינים' },
+      dept: { g: 'מכולת', v: 'ירקות ופירות', d: 'משקאות', y: 'מוצרי חלב', m: 'בשר ודגים', s: 'תבלינים' },
       unit: { u: 'יח׳', kg: 'ק״ג', g: 'גרם', pk: 'מארז' },
       all: 'הכל', items: 'פריטים', bought: 'נקנו',
       addLabel: 'הוסף פריט', addPh: 'הוסף פריט… למשל: עגבניה',
@@ -210,7 +210,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     },
     en: {
       dir: 'ltr',
-      dept: { g: 'Grocery', v: 'Greengrocery', m: 'Meat & Fish', d: 'Drinks', s: 'Spices' },
+      dept: { g: 'Grocery', v: 'Fruit & Veg', d: 'Drinks', y: 'Dairy', m: 'Meat & Fish', s: 'Spices' },
       unit: { u: 'pcs', kg: 'kg', g: 'g', pk: 'pack' },
       all: 'All', items: 'items', bought: 'bought',
       addLabel: 'Add item', addPh: 'Add item… e.g. Tomato',
@@ -251,7 +251,12 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       if (s && typeof s === 'object') { for (var k in d) if (s[k] !== undefined) d[k] = s[k]; }
     } catch (e) {}
     // migrate older lists: fish merged into meat
-    d.items.forEach(function (x) { if (x.d === 'f') x.d = 'm'; });
+    d.items.forEach(function (x) {
+      if (x.d === 'f') x.d = 'm';
+      // items that moved to a new department in the autofill list (e.g. dairy)
+      var e = DICT.filter(function (k) { return k.he === x.he; })[0];
+      if (e && x.d === 'g' && e.d !== 'g') x.d = e.d;
+    });
     if (d.filter === 'f') d.filter = 'm';
     return d;
   }
