@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartly</title>
+<meta name="theme-color" content="#F5F4EF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cartly">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F4EF; --card:#FFFFFF; --ink:#1C1F1A; --mute:#5E625B; --line:#E3E1D8; --chip:#EAE8E0; --seg:#FFFFFF;
+  --accent:#2F7D4F; --accent-text:#2F7D4F; --scrim:rgba(0,0,0,.45);
+}
+:root[data-theme="dark"]{
+  --bg:#121412; --card:#1C1F1C; --ink:#EDEDE7; --mute:#A6AAA1; --line:#2E322E; --chip:#2A2E2A; --seg:#3A3F3A;
+  --scrim:rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:Rubik,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.app{max-width:600px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+header{padding:calc(18px + env(safe-area-inset-top)) 20px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.5px}
+.count{margin:2px 0 0;font-size:14px;color:var(--mute)}
+.icon-btn{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;padding:0}
+
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 16px 10px}
+.search{position:relative}
+.search-box{height:52px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px}
+.search-box:focus-within{border:2px solid var(--accent-text);padding:0 13px}
+.search-box input{flex:1;min-width:0;border:0;outline:none;background:transparent;font-size:16px}
+.search-box input::placeholder{color:var(--mute)}
+.sugs{position:absolute;inset-inline:0;top:58px;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,.22);z-index:10}
+.sug{width:100%;min-height:60px;border:0;background:transparent;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;text-align:start}
+.sug+.sug{border-top:1px solid var(--line)}
+.sug.active,.sug:hover{background:var(--chip)}
+.sug-name{font-size:16px}
+.sug-name b{color:var(--accent-text)}
+.sug-sub{font-size:13px;color:var(--mute)}
+.tag{font-size:12px;padding:4px 10px;border-radius:10px;background:var(--chip);white-space:nowrap}
+.tag.o{background:transparent;border:1px solid var(--line);color:var(--mute)}
+.sug.new{color:var(--accent-text);font-weight:500;justify-content:flex-start}
+
+.note{margin-top:10px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;padding:12px 14px}
+.note svg{flex:none;margin-top:2px;color:var(--mute)}
+.note textarea{flex:1;border:0;outline:none;background:transparent;resize:none;font-size:15px;line-height:1.4;min-height:22px;max-height:120px;padding:0}
+.note textarea::placeholder{color:var(--mute)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding-top:10px}
+.chip{flex:none;height:38px;padding:0 14px;border-radius:19px;border:1px solid var(--line);background:var(--card);font-size:14px;font-weight:500}
+.chip.on{border-color:var(--accent);background:var(--accent);color:#fff}
+
+main{flex:1;padding:4px 16px 16px;display:flex;flex-direction:column;gap:16px}
+.dept-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 4px 8px}
+.dept-head h2{margin:0;font-size:15px;font-weight:600;color:var(--accent-text)}
+.dept-head span{font-size:13px;color:var(--mute)}
+.list{background:var(--card);border-radius:18px;border:1px solid var(--line);overflow:hidden}
+.row{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 6px;min-height:60px}
+[dir="ltr"] .row{padding:8px 6px 8px 10px}
+.row+.row{border-top:1px solid var(--line)}
+.row.bought{opacity:.55}
+.check{flex:none;width:44px;height:44px;border:0;background:transparent;padding:0;display:flex;align-items:center;justify-content:center}
+.check i{width:28px;height:28px;border-radius:14px;border:2px solid var(--mute);display:flex;align-items:center;justify-content:center}
+.bought .check i{border:0;background:var(--accent)}
+.name{flex:1;min-width:0;border:0;background:transparent;text-align:start;padding:8px 0;font-size:16px;overflow-wrap:anywhere}
+.bought .name{text-decoration:line-through;color:var(--mute)}
+.stepper{display:flex;align-items:center}
+.step{width:40px;height:44px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;padding:0}
+.qty{min-width:58px;text-align:center;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+.qty.none{color:var(--mute)}
+
+.empty{text-align:center;color:var(--mute);padding:48px 24px;font-size:16px;line-height:1.6}
+
+footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:12px 16px calc(14px + env(safe-area-inset-bottom));display:flex;gap:10px}
+.btn{flex:1;height:50px;border-radius:14px;border:1px solid var(--line);background:var(--card);font-size:15px;font-weight:500}
+.btn.primary{flex:1.4;border:0;background:var(--accent);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:disabled{opacity:.45;cursor:default}
+
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:20}
+.sheet{position:fixed;inset-inline:0;bottom:0;margin:0 auto;max-width:600px;background:var(--card);border-radius:28px 28px 0 0;padding:12px 20px calc(24px + env(safe-area-inset-bottom));z-index:21;display:flex;flex-direction:column;gap:20px;max-height:90vh;overflow-y:auto}
+.grip{align-self:center;width:40px;height:5px;border-radius:3px;background:var(--line)}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sheet-head h2{margin:0;font-size:22px;font-weight:700;overflow-wrap:anywhere}
+.link{min-height:44px;border:0;background:transparent;color:var(--accent-text);font-size:15px;font-weight:500;padding:0 8px}
+.field h3{margin:0 0 10px;font-size:14px;font-weight:500;color:var(--mute)}
+.seg{display:grid;gap:4px;padding:4px;border-radius:14px;background:var(--chip)}
+.seg button{height:44px;border:0;border-radius:11px;background:transparent;color:var(--mute);font-size:15px;font-weight:500;display:flex;align-items:center;justify-content:center;gap:8px}
+.seg button.on{background:var(--seg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.swatches{display:flex;gap:14px;flex-wrap:wrap}
+.sw{width:48px;height:48px;border-radius:24px;border:0;padding:0;display:flex;align-items:center;justify-content:center}
+.sw.on{border:3px solid var(--card)}
+.danger{height:48px;border-radius:14px;border:1px solid var(--line);background:transparent;color:#C0392B;font-size:15px;font-weight:500}
+:root[data-theme="dark"] .danger{color:#FF8A7A}
+.big-stepper{display:flex;align-items:center;gap:8px}
+.big-stepper .step{width:48px;height:48px;border-radius:24px;background:var(--chip)}
+.big-stepper .qty{font-size:18px;min-width:90px}
+.help{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.help li{display:flex;gap:12px;align-items:flex-start}
+.help b{display:block;font-size:16px;margin-bottom:2px}
+.help p{margin:0;font-size:15px;line-height:1.5;color:var(--mute)}
+.help .n{flex:none;width:28px;height:28px;border-radius:14px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.ver{font-size:12px;color:var(--mute);text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <h1>Cartly</h1>
+      <p class="count" id="count"></p>
+    </div>
+    <div style="display:flex;gap:8px">
+    <button class="icon-btn" id="openHelp" aria-label="">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+    <button class="icon-btn" id="openSettings" aria-label="">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+    </div>
+  </header>
+
+  <div class="top">
+    <div class="search">
+      <label class="sr" for="add" id="addLabel"></label>
+      <div class="search-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="color:var(--mute)"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+        <input id="add" autocomplete="off" enterkeyhint="done">
+      </div>
+      <div class="sugs" id="sugs" hidden></div>
+    </div>
+    <label class="note">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      <span class="sr" id="noteLabel"></span>
+      <textarea id="note" rows="1" dir="auto"></textarea>
+    </label>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <main id="main"></main>
+
+  <footer>
+    <button class="btn" id="clearBought"></button>
+    <button class="btn primary" id="share">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>
+      <span id="shareLabel"></span>
+    </button>
+  </footer>
+</div>
+
+<div id="overlay"></div>
+
+<script src="items.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // ---------- constants ----------
+  var DEPTS = ['g', 'v', 'm', 'd', 's'];
+  var ACCENTS = [
+    { c: '#2F7D4F', light: '#6CC28E', he: 'ירוק', en: 'Green' },
+    { c: '#2563A8', light: '#86B6EE', he: 'כחול', en: 'Blue' },
+    { c: '#B04A22', light: '#F2946A', he: 'כתום', en: 'Orange' },
+    { c: '#6B4FA0', light: '#B8A2E6', he: 'סגול', en: 'Purple' },
+    { c: '#1F7A7A', light: '#6CCACA', he: 'טורקיז', en: 'Teal' }
+  ];
+  var UNITS = ['u', 'kg', 'g', 'pk'];
+  var T = {
+    he: {
+      dir: 'rtl',
+      dept: { g: 'מכולת', v: 'ירקן', m: 'בשר ודגים', d: 'משקאות', s: 'תבלינים' },
+      unit: { u: 'יח׳', kg: 'ק״ג', g: 'גרם', pk: 'מארז' },
+      all: 'הכל', items: 'פריטים', bought: 'נקנו',
+      addLabel: 'הוסף פריט', addPh: 'הוסף פריט… למשל: עגבניה',
+      noteLabel: 'הערה כללית לקונה', notePh: 'הערה כללית לקונה (תישלח בוואטסאפ)',
+      addNew: 'הוסף "{q}" כפריט חדש', inList: 'ברשימה',
+      clearBought: 'נקה נקנו', share: 'שלח בוואטסאפ',
+      of: 'מתוך', noQty: 'ללא כמות',
+      empty: 'הרשימה ריקה.\nהקלד שם של מוצר בשורה למעלה כדי להתחיל.',
+      emptyFilter: 'אין פריטים במחלקה הזו.',
+      settings: 'הגדרות', done: 'סיום', lang: 'שפה', mode: 'תצוגה', day: 'יום', night: 'לילה', color: 'צבע',
+      clearAll: 'מחק את כל הרשימה', confirmAll: 'למחוק את כל הרשימה?', confirmBought: 'להסיר את כל הפריטים שנקנו?',
+      pickDept: 'לאיזו מחלקה להוסיף?', cancel: 'ביטול',
+      edit: 'עריכת פריט', qty: 'כמות', unitT: 'יחידה', deptT: 'מחלקה', remove: 'הסר מהרשימה',
+      waTitle: 'רשימת קניות – Cartly', waNote: 'הערה:', nothing: 'אין פריטים לשליחה.',
+      version: 'גרסה 1.0',
+      help: 'איך משתמשים',
+      helpItems: [
+        ['הוספת פריט', 'הקלידו כמה אותיות (למשל עג) ובחרו מהרשימה. הפריט נכנס לבד למחלקה וליחידה הנכונות. מוצר שלא מופיע ברשימה – לחצו "הוסף כפריט חדש" ובחרו מחלקה.'],
+        ['כמות', 'לחצו + או −. במשקל כל לחיצה מוסיפה או מורידה 100 גרם (גם כשהיחידה היא ק״ג). ביחידות ובמארזים – אחד בכל לחיצה. מינוס מתחת למינימום משאיר את הפריט ללא כמות.'],
+        ['עריכת פריט', 'לחיצה על שם הפריט פותחת עריכה: כמות, יחידה, מחלקה, "ללא כמות" או הסרה מהרשימה.'],
+        ['בזמן הקנייה', 'לחיצה על העיגול מסמנת שהפריט נקנה – הוא נמחק בקו ויורד לתחתית. "נקה נקנו" מסיר את כל מה שנקנה.'],
+        ['הערה לקונה', 'כתבו בשדה ההערה מה שחשוב (למשל "לבדוק תאריכי תפוגה"). ההערה נשלחת בראש הודעת הוואטסאפ.'],
+        ['שליחה בוואטסאפ', 'הכפתור "שלח בוואטסאפ" שולח את ההערה ואת הפריטים שעוד לא נקנו, מסודרים לפי מחלקות.'],
+        ['סינון לפי מחלקה', 'כפתורי המחלקות מציגים מחלקה אחת בלבד. "הכל" מחזיר את כל הרשימה.'],
+        ['הגדרות', 'בגלגל השיניים: שפה, מצב יום/לילה, צבע, ומחיקת כל הרשימה.'],
+        ['שמירה', 'הרשימה נשמרת בטלפון שלכם ועובדת גם בלי אינטרנט.']
+      ]
+    },
+    en: {
+      dir: 'ltr',
+      dept: { g: 'Grocery', v: 'Greengrocery', m: 'Meat & Fish', d: 'Drinks', s: 'Spices' },
+      unit: { u: 'pcs', kg: 'kg', g: 'g', pk: 'pack' },
+      all: 'All', items: 'items', bought: 'bought',
+      addLabel: 'Add item', addPh: 'Add item… e.g. Tomato',
+      noteLabel: 'General note for the buyer', notePh: 'Note for the buyer (sent on WhatsApp)',
+      addNew: 'Add "{q}" as a new item', inList: 'In list',
+      clearBought: 'Clear bought', share: 'Send on WhatsApp',
+      of: 'of', noQty: 'No quantity',
+      empty: 'Your list is empty.\nType a product name above to start.',
+      emptyFilter: 'No items in this department.',
+      settings: 'Settings', done: 'Done', lang: 'Language', mode: 'Display', day: 'Day', night: 'Night', color: 'Color',
+      clearAll: 'Delete the whole list', confirmAll: 'Delete the whole list?', confirmBought: 'Remove all bought items?',
+      pickDept: 'Which department?', cancel: 'Cancel',
+      edit: 'Edit item', qty: 'Quantity', unitT: 'Unit', deptT: 'Department', remove: 'Remove from list',
+      waTitle: 'Shopping list – Cartly', waNote: 'Note:', nothing: 'No items to send.',
+      version: 'Version 1.0',
+      help: 'How to use',
+      helpItems: [
+        ['Add an item', 'Type a few letters (e.g. tom) and pick from the list. The item goes into the right department with the right unit. Not in the list? Tap "Add as a new item" and choose a department.'],
+        ['Quantity', 'Tap + or −. Kg changes by 0.1, grams by 100, pieces and packs by 1. Going below the minimum leaves the item with no quantity.'],
+        ['Edit an item', 'Tap the item name to change quantity, unit or department, set "No quantity", or remove it.'],
+        ['While shopping', 'Tap the circle to mark an item as bought – it is crossed out and moves to the bottom. "Clear bought" removes all bought items.'],
+        ['Note for the buyer', 'Write anything important in the note field (e.g. "buy before 6 pm"). It is sent at the top of the WhatsApp message.'],
+        ['Send on WhatsApp', 'Sends the note and all items not yet bought, grouped by department.'],
+        ['Filter by department', 'The department buttons show one department only. "All" shows the whole list.'],
+        ['Settings', 'The gear: language, day/night, color, and delete the whole list.'],
+        ['Saved on your phone', 'Your list is saved on this phone and works without internet.']
+      ]
+    }
+  };
+
+  // ---------- state ----------
+  var KEY = 'cartly.v1';
+  var S = load();
+  function load() {
+    var d = { lang: 'he', dark: false, accent: '#2F7D4F', items: [], note: '', filter: 'all', nextId: 1 };
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (s && typeof s === 'object') { for (var k in d) if (s[k] !== undefined) d[k] = s[k]; }
+    } catch (e) {}
+    // migrate older lists: fish merged into meat
+    d.items.forEach(function (x) { if (x.d === 'f') x.d = 'm'; });
+    if (d.filter === 'f') d.filter = 'm';
+    return d;
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+  function t() { return T[S.lang]; }
+
+  // ---------- helpers ----------
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function stepFor(u) { return u === 'kg' ? 0.1 : (u === 'g' ? 100 : 1); }
+  function rq(n) { return Math.round(n * 10) / 10; }
+  function defQty(u) { return u === 'g' ? 500 : 1; }
+  function fmtQty(it) {
+    if (it.q == null) return '—';
+    return (Math.round(it.q * 10) / 10) + ' ' + t().unit[it.u];
+  }
+  function nameOf(it) { return S.lang === 'he' ? (it.he || it.en) : (it.en || it.he); }
+  function norm(s) { return String(s).toLowerCase().replace(/[׳'"״]/g, '').trim(); }
+  var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+  var MINUS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  var PLUS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+
+  // ---------- theme / language ----------
+  function applyTheme() {
+    var root = document.documentElement;
+    root.setAttribute('data-theme', S.dark ? 'dark' : 'light');
+    var a = ACCENTS.filter(function (x) { return x.c === S.accent; })[0] || ACCENTS[0];
+    root.style.setProperty('--accent', a.c);
+    root.style.setProperty('--accent-text', S.dark ? a.light : a.c);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', S.dark ? '#121412' : '#F5F4EF');
+  }
+  function applyLang() {
+    var L = t();
+    document.documentElement.lang = S.lang;
+    document.documentElement.dir = L.dir;
+    $('addLabel').textContent = L.addLabel;
+    $('add').placeholder = L.addPh;
+    $('noteLabel').textContent = L.noteLabel;
+    $('note').placeholder = L.notePh;
+    $('clearBought').textContent = L.clearBought;
+    $('shareLabel').textContent = L.share;
+    $('openSettings').setAttribute('aria-label', L.settings);
+    $('openHelp').setAttribute('aria-label', L.help);
+  }
+
+  // ---------- main render ----------
+  function render() {
+    var L = t();
+    var bought = S.items.filter(function (x) { return x.b; }).length;
+    $('count').textContent = S.items.length + ' ' + L.items + ' · ' + bought + ' ' + L.bought;
+    $('clearBought').disabled = bought === 0;
+
+    // chips
+    var chips = [{ id: 'all', label: L.all }].concat(DEPTS.map(function (d) { return { id: d, label: L.dept[d] }; }));
+    $('chips').innerHTML = chips.map(function (c) {
+      return '<button class="chip' + (S.filter === c.id ? ' on' : '') + '" data-filter="' + c.id + '" aria-pressed="' + (S.filter === c.id) + '">' + esc(c.label) + '</button>';
+    }).join('');
+
+    // list
+    var html = '';
+    var shown = DEPTS.filter(function (d) { return S.filter === 'all' || S.filter === d; });
+    shown.forEach(function (d) {
+      var list = S.items.filter(function (x) { return x.d === d; });
+      if (!list.length) return;
+      list = list.filter(function (x) { return !x.b; }).concat(list.filter(function (x) { return x.b; }));
+      var left = list.filter(function (x) { return !x.b; }).length;
+      html += '<section><div class="dept-head"><h2>' + esc(L.dept[d]) + '</h2><span>' + left + ' ' + L.of + ' ' + list.length + '</span></div><div class="list">';
+      list.forEach(function (it) {
+        html += '<div class="row' + (it.b ? ' bought' : '') + '" data-id="' + it.id + '">' +
+          '<button class="check" data-act="toggle" aria-pressed="' + it.b + '" aria-label="' + esc(nameOf(it)) + '"><i>' + (it.b ? CHECK : '') + '</i></button>' +
+          '<button class="name" data-act="edit">' + esc(nameOf(it)) + '</button>' +
+          '<div class="stepper">' +
+            '<button class="step" data-act="dec" aria-label="−">' + MINUS + '</button>' +
+            '<span class="qty' + (it.q == null ? ' none' : '') + '">' + esc(fmtQty(it)) + '</span>' +
+            '<button class="step" data-act="inc" aria-label="+">' + PLUS + '</button>' +
+          '</div></div>';
+      });
+      html += '</div></section>';
+    });
+    if (!html) {
+      var msg = S.items.length ? L.emptyFilter : L.empty;
+      html = '<p class="empty">' + esc(msg).replace(/\n/g, '<br>') + '</p>';
+    }
+    $('main').innerHTML = html;
+  }
+
+  // ---------- item ops ----------
+  function find(id) { return S.items.filter(function (x) { return x.id === id; })[0]; }
+  function addItem(src) {
+    var key = norm(src.he || src.en);
+    var exist = S.items.filter(function (x) { return norm(x.he || x.en) === key && x.d === src.d; })[0];
+    if (exist) {
+      exist.b = false;
+      exist.q = exist.q == null ? defQty(exist.u) : rq(exist.q + stepFor(exist.u));
+    } else {
+      S.items.push({ id: S.nextId++, he: src.he, en: src.en, d: src.d, u: src.u, q: defQty(src.u), b: false });
+    }
+    if (S.filter !== 'all' && S.filter !== src.d) S.filter = 'all';
+    save(); render();
+  }
+
+  // ---------- autofill ----------
+  var sugList = [], sugIdx = -1;
+  function search(q) {
+    var n = norm(q);
+    if (!n) return [];
+    var res = [];
+    DICT.forEach(function (e) {
+      var he = norm(e.he), en = norm(e.en), score = -1;
+      if (he.indexOf(n) === 0 || en.indexOf(n) === 0) score = 0;
+      else if ((' ' + he).indexOf(' ' + n) >= 0 || (' ' + en).indexOf(' ' + n) >= 0) score = 1;
+      else if (he.indexOf(n) >= 0 || en.indexOf(n) >= 0) score = 2;
+      if (score >= 0) res.push({ e: e, s: score });
+    });
+    res.sort(function (a, b) { return a.s - b.s || a.e.he.length - b.e.he.length; });
+    return res.slice(0, 6).map(function (r) { return r.e; });
+  }
+  function highlight(name, q) {
+    var j = name.toLowerCase().indexOf(q.toLowerCase());
+    if (j < 0) return esc(name);
+    return esc(name.slice(0, j)) + '<b>' + esc(name.slice(j, j + q.length)) + '</b>' + esc(name.slice(j + q.length));
+  }
+  function showSugs() {
+    var q = $('add').value.trim();
+    var box = $('sugs');
+    if (!q) { box.hidden = true; sugList = []; return; }
+    var L = t();
+    sugList = search(q);
+    sugIdx = -1;
+    var isHe = /[֐-׿]/.test(q);
+    var html = sugList.map(function (e, i) {
+      var main = isHe ? e.he : e.en, sub = isHe ? e.en : e.he;
+      var inList = S.items.some(function (x) { return x.he === e.he && x.d === e.d; });
+      return '<button class="sug" data-i="' + i + '"><span><span class="sug-name">' + highlight(main, q) + '</span><br><span class="sug-sub">' + esc(sub) + '</span></span>' +
+        '<span style="display:flex;gap:6px">' + (inList ? '<span class="tag o">' + esc(L.inList) + '</span>' : '') +
+        '<span class="tag">' + esc(L.dept[e.d]) + '</span><span class="tag o">' + esc(L.unit[e.u]) + '</span></span></button>';
+    }).join('');
+    html += '<button class="sug new" data-i="new">' + PLUS + ' ' + esc(L.addNew.replace('{q}', q)) + '</button>';
+    box.innerHTML = html;
+    box.hidden = false;
+  }
+  function pickSug(i) {
+    var q = $('add').value.trim();
+    if (i === 'new') {
+      openDeptPicker(q);
+    } else {
+      addItem(sugList[i]);
+    }
+    $('add').value = '';
+    $('sugs').hidden = true;
+    sugList = [];
+  }
+
+  // ---------- sheets ----------
+  function closeSheet() { $('overlay').innerHTML = ''; }
+  function openSheet(inner) {
+    $('overlay').innerHTML = '<div class="scrim" data-close="1"></div><section class="sheet" role="dialog" aria-modal="true"><div class="grip"></div>' + inner + '</section>';
+  }
+
+  function openSettings() {
+    var L = t();
+    var sw = ACCENTS.map(function (a) {
+      var on = a.c === S.accent;
+      return '<button class="sw' + (on ? ' on' : '') + '" data-accent="' + a.c + '" aria-pressed="' + on + '" aria-label="' + (S.lang === 'he' ? a.he : a.en) + '" style="background:' + a.c + (on ? ';box-shadow:0 0 0 2px ' + a.c : '') + '">' + (on ? CHECK.replace('16', '20').replace('16', '20') : '') + '</button>';
+    }).join('');
+    openSheet(
+      '<div class="sheet-head"><h2>' + L.settings + '</h2><button class="link" data-close="1">' + L.done + '</button></div>' +
+      '<div class="field"><h3>' + L.lang + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+        '<button data-lang="he" class="' + (S.lang === 'he' ? 'on' : '') + '">עברית</button>' +
+        '<button data-lang="en" class="' + (S.lang === 'en' ? 'on' : '') + '">English</button></div></div>' +
+      '<div class="field"><h3>' + L.mode + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+        '<button data-dark="0" class="' + (!S.dark ? 'on' : '') + '">' + L.day + '</button>' +
+        '<button data-dark="1" class="' + (S.dark ? 'on' : '') + '">' + L.night + '</button></div></div>' +
+      '<div class="field"><h3>' + L.color + '</h3><div class="swatches">' + sw + '</div></div>' +
+      '<button class="danger" data-clearall="1">' + L.clearAll + '</button>' +
+      '<div class="ver">Cartly · ' + L.version + '</div>'
+    );
+  }
+
+  function openHelp() {
+    var L = t();
+    openSheet(
+      '<div class="sheet-head"><h2>' + L.help + '</h2><button class="link" data-close="1">' + L.done + '</button></div>' +
+      '<ol class="help">' + L.helpItems.map(function (h, i) {
+        return '<li><span class="n">' + (i + 1) + '</span><div><b>' + esc(h[0]) + '</b><p>' + esc(h[1]) + '</p></div></li>';
+      }).join('') + '</ol>'
+    );
+  }
+
+  function openDeptPicker(q) {
+    var L = t();
+    openSheet(
+      '<div class="sheet-head"><h2>' + esc(q) + '</h2><button class="link" data-close="1">' + L.cancel + '</button></div>' +
+      '<div class="field"><h3>' + L.pickDept + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+      DEPTS.map(function (d) { return '<button data-newdept="' + d + '">' + esc(L.dept[d]) + '</button>'; }).join('') +
+      '</div></div>'
+    );
+    $('overlay').dataset.newname = q;
+  }
+
+  function openEdit(id) {
+    var it = find(id); if (!it) return;
+    var L = t();
+    openSheet(
+      '<div class="sheet-head"><h2>' + esc(nameOf(it)) + '</h2><button class="link" data-close="1">' + L.done + '</button></div>' +
+      '<div class="field"><h3>' + L.qty + '</h3><div class="big-stepper">' +
+        '<button class="step" data-edit="dec" aria-label="−">' + MINUS + '</button>' +
+        '<span class="qty' + (it.q == null ? ' none' : '') + '" id="editQty">' + esc(fmtQty(it)) + '</span>' +
+        '<button class="step" data-edit="inc" aria-label="+">' + PLUS + '</button>' +
+        '<button class="link" data-edit="noqty">' + L.noQty + '</button></div></div>' +
+      '<div class="field"><h3>' + L.unitT + '</h3><div class="seg" style="grid-template-columns:repeat(4,minmax(0,1fr))">' +
+        UNITS.map(function (u) { return '<button data-unit="' + u + '" class="' + (it.u === u ? 'on' : '') + '">' + L.unit[u] + '</button>'; }).join('') + '</div></div>' +
+      '<div class="field"><h3>' + L.deptT + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
+        DEPTS.map(function (d) { return '<button data-dept="' + d + '" class="' + (it.d === d ? 'on' : '') + '">' + esc(L.dept[d]) + '</button>'; }).join('') + '</div></div>' +
+      '<button class="danger" data-remove="1">' + L.remove + '</button>'
+    );
+    $('overlay').dataset.editid = id;
+  }
+
+  // ---------- WhatsApp ----------
+  function shareText() {
+    var L = t();
+    var lines = ['*' + L.waTitle + '*'];
+    if (S.note.trim()) lines.push('', L.waNote + ' ' + S.note.trim());
+    var any = false;
+    DEPTS.forEach(function (d) {
+      var list = S.items.filter(function (x) { return x.d === d && !x.b; });
+      if (!list.length) return;
+      any = true;
+      lines.push('', '*' + L.dept[d] + '*');
+      list.forEach(function (it) {
+        lines.push('• ' + nameOf(it) + (it.q == null ? '' : ' – ' + fmtQty(it)));
+      });
+    });
+    return any ? lines.join('\n') : '';
+  }
+
+  // ---------- events ----------
+  $('add').addEventListener('input', showSugs);
+  $('add').addEventListener('keydown', function (e) {
+    var btns = $('sugs').querySelectorAll('.sug');
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      if (!btns.length) return;
+      e.preventDefault();
+      sugIdx = (sugIdx + (e.key === 'ArrowDown' ? 1 : -1) + btns.length) % btns.length;
+      btns.forEach(function (b, i) { b.classList.toggle('active', i === sugIdx); });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (!$('add').value.trim()) return;
+      if (sugIdx >= 0 && btns[sugIdx]) pickSug(btns[sugIdx].dataset.i === 'new' ? 'new' : +btns[sugIdx].dataset.i);
+      else if (sugList.length) pickSug(0);
+      else pickSug('new');
+    } else if (e.key === 'Escape') {
+      $('sugs').hidden = true;
+    }
+  });
+  $('sugs').addEventListener('mousedown', function (e) { e.preventDefault(); }); // keep focus on input
+  $('sugs').addEventListener('click', function (e) {
+    var b = e.target.closest('.sug'); if (!b) return;
+    pickSug(b.dataset.i === 'new' ? 'new' : +b.dataset.i);
+    $('add').focus();
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.search')) $('sugs').hidden = true;
+  });
+
+  var noteEl = $('note');
+  function fitNote() { noteEl.style.height = 'auto'; noteEl.style.height = Math.min(noteEl.scrollHeight, 120) + 'px'; }
+  noteEl.addEventListener('input', function () { S.note = noteEl.value; save(); fitNote(); });
+
+  $('chips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-filter]'); if (!b) return;
+    S.filter = b.dataset.filter; save(); render();
+  });
+
+  $('main').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var id = +b.closest('.row').dataset.id, it = find(id); if (!it) return;
+    var act = b.dataset.act;
+    if (act === 'toggle') it.b = !it.b;
+    else if (act === 'inc') it.q = it.q == null ? defQty(it.u) : rq(it.q + stepFor(it.u));
+    else if (act === 'dec') {
+      if (it.q == null) return;
+      var s = stepFor(it.u);
+      it.q = it.q - s < s - 1e-9 ? null : rq(it.q - s);
+    } else if (act === 'edit') { openEdit(id); return; }
+    save(); render();
+  });
+
+  $('clearBought').addEventListener('click', function () {
+    if (!confirm(t().confirmBought)) return;
+    S.items = S.items.filter(function (x) { return !x.b; });
+    save(); render();
+  });
+
+  $('share').addEventListener('click', function () {
+    var text = shareText();
+    if (!text) { alert(t().nothing); return; }
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  });
+
+  $('openSettings').addEventListener('click', openSettings);
+  $('openHelp').addEventListener('click', openHelp);
+
+  $('overlay').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-close],[data-lang],[data-dark],[data-accent],[data-clearall],[data-newdept],[data-edit],[data-unit],[data-dept],[data-remove]');
+    if (!b) return;
+    var ov = $('overlay');
+    if (b.dataset.close) { closeSheet(); return; }
+    if (b.dataset.lang) { S.lang = b.dataset.lang; save(); applyLang(); render(); openSettings(); return; }
+    if (b.dataset.dark) { S.dark = b.dataset.dark === '1'; save(); applyTheme(); openSettings(); return; }
+    if (b.dataset.accent) { S.accent = b.dataset.accent; save(); applyTheme(); openSettings(); return; }
+    if (b.dataset.clearall) {
+      if (!confirm(t().confirmAll)) return;
+      S.items = []; S.note = ''; noteEl.value = ''; fitNote(); save(); render(); closeSheet(); return;
+    }
+    if (b.dataset.newdept) {
+      var nm = ov.dataset.newname;
+      addItem({ he: nm, en: nm, d: b.dataset.newdept, u: 'u' });
+      closeSheet(); return;
+    }
+    var it = find(+ov.dataset.editid); if (!it) { closeSheet(); return; }
+    if (b.dataset.edit === 'inc') it.q = it.q == null ? defQty(it.u) : rq(it.q + stepFor(it.u));
+    else if (b.dataset.edit === 'dec') { if (it.q != null) { var s = stepFor(it.u); it.q = it.q - s < s - 1e-9 ? null : rq(it.q - s); } }
+    else if (b.dataset.edit === 'noqty') it.q = null;
+    else if (b.dataset.unit) { if (it.u !== b.dataset.unit) { it.u = b.dataset.unit; if (it.q != null) it.q = defQty(it.u); } }
+    else if (b.dataset.dept) it.d = b.dataset.dept;
+    else if (b.dataset.remove) { S.items = S.items.filter(function (x) { return x !== it; }); save(); render(); closeSheet(); return; }
+    save(); render(); openEdit(it.id);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && $('overlay').innerHTML) closeSheet(); });
+
+  // ---------- start ----------
+  noteEl.value = S.note;
+  applyTheme(); applyLang(); render(); fitNote();
+
+  if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>
