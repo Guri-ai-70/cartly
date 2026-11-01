@@ -256,6 +256,8 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       // items that moved to a new department in the autofill list (e.g. dairy)
       var e = DICT.filter(function (k) { return k.he === x.he; })[0];
       if (e && x.d === 'g' && e.d !== 'g') x.d = e.d;
+      // an item typed by hand that is now in the autofill list gets its English name and department
+      if (e && x.en === x.he && e.en !== e.he) { x.en = e.en; x.d = e.d; if (x.u === 'u' && e.u !== 'u') { x.u = e.u; } }
     });
     if (d.filter === 'f') d.filter = 'm';
     return d;

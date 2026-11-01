@@ -214,6 +214,7 @@ d|u|קולה|Cola
 d|u|מיץ תפוזים|Orange juice
 d|u|מיץ ענבים|Grape juice
 d|u|מיץ תפוחים|Apple juice
+d|u|מיץ אשכוליות|Grapefruit juice
 d|u|לימונדה|Lemonade
 d|u|סירופ|Syrup
 d|pk|בירה|Beer
