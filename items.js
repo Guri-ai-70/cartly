@@ -1,6 +1,6 @@
 // Cartly autofill dictionary (hidden list used only for suggestions).
 // Format per line:  department | unit | Hebrew name | English name
-// Departments: g = Grocery (מכולת), v = Fruit & Veg (ירקות ופירות), d = Drinks (משקאות), y = Dairy (מוצרי חלב), m = Meat & Fish (בשר ודגים), s = Spices (תבלינים), c = Toiletries & Cleaning (טואלטיקה ומוצרי ניקיון)
+// Departments: g = Grocery (מכולת), v = Fruit & Veg (ירקות ופירות), d = Drinks (משקאות), y = Dairy (מוצרי חלב), m = Meat & Fish (בשר ודגים), z = Frozen (מוקפאים), s = Spices (תבלינים), c = Toiletries & Cleaning (טואלטיקה ומוצרי ניקיון)
 // Units: u = pcs (יח׳), kg = kg (ק״ג), g = grams (גרם), pk = pack (מארז)
 // To add an item later, just add a new line in the same format.
 const DICT_RAW = `
@@ -238,16 +238,16 @@ g|u|מסטיק|Chewing gum
 g|u|סוכריות|Candy
 g|u|עוגה|Cake
 g|u|פופקורן|Popcorn
-g|u|ירקות קפואים|Frozen vegetables
-g|u|אפונה קפואה|Frozen peas
-g|u|צ׳יפס קפוא|Frozen fries
-g|u|פיצה קפואה|Frozen pizza
-g|u|בורקס|Bourekas
-g|u|גלידה|Ice cream
-g|u|בצק עלים|Puff pastry
-g|pk|מלאווח|Malawach
-g|pk|ג׳חנון|Jachnun
-g|pk|קרטיבים|Popsicles
+z|u|ירקות קפואים|Frozen vegetables
+z|u|אפונה קפואה|Frozen peas
+z|u|צ׳יפס קפוא|Frozen fries
+z|u|פיצה קפואה|Frozen pizza
+z|u|בורקס|Bourekas
+z|u|גלידה|Ice cream
+z|u|בצק עלים|Puff pastry
+z|pk|מלאווח|Malawach
+z|pk|ג׳חנון|Jachnun
+z|pk|קרטיבים|Popsicles
 c|pk|נייר טואלט|Toilet paper
 c|pk|מגבות נייר|Paper towels
 c|pk|מפיות|Napkins
@@ -365,6 +365,16 @@ s|u|עלי דפנה|Bay leaves
 s|u|שומשום|Sesame seeds
 s|u|מלח גס|Coarse salt
 s|u|מלח לימון|Citric acid
+z|u|שעועית ירוקה קפואה|Frozen green beans
+z|u|תירס קפוא|Frozen corn
+z|u|ברוקולי קפוא|Frozen broccoli
+z|u|פירות יער קפואים|Frozen berries
+z|u|שניצל תירס|Corn schnitzel
+z|pk|שניצלונים|Chicken nuggets
+z|u|פילה דג קפוא|Frozen fish fillet
+z|u|בצק פילו|Filo dough
+z|pk|פסטה ממולאת|Stuffed pasta
+z|pk|קובה|Kubbeh
 `;
 
 const DICT = DICT_RAW.trim().split('\n').map(function (line) {
