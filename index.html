@@ -183,7 +183,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
 </div>
 
 <div id="overlay"></div>
-<input type="file" id="restoreFile" accept=".json,application/json" hidden>
+<input type="file" id="restoreFile" accept=".txt,.json,text/plain,application/json" hidden>
 
 <script src="items.js"></script>
 <script>
@@ -214,7 +214,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       empty: 'הרשימה ריקה.\nהקלד שם של מוצר בשורה למעלה כדי להתחיל.',
       emptyFilter: 'אין פריטים במחלקה הזו.',
       settings: 'הגדרות', done: 'סיום', lang: 'שפה', mode: 'תצוגה', day: 'יום', night: 'לילה', color: 'צבע',
-      clearAll: 'מחק את כל הרשימה', mineT: 'המוצרים שלי', mineTag: 'שלי', mineEmpty: 'עדיין לא הוספתם מוצרים משלכם. כל מוצר שתוסיפו ושלא מופיע בהשלמה האוטומטית יישמר כאן ויוצע לכם בפעם הבאה.', mineDel: 'הסר מהמוצרים שלי', backupT: 'גיבוי ושחזור', backup: 'גיבוי', restore: 'שחזור', backupHint: 'הגיבוי שומר הכל: הרשימה, המוצרים שלי, ההערה וההגדרות. שלחו את הקובץ לעצמכם (וואטסאפ, מייל או Drive), ובטלפון חדש לחצו "שחזור" ובחרו אותו.', restoreAsk: 'לשחזר מהגיבוי? כל מה שיש כרגע ב-Cartly יוחלף.', restoreBad: 'הקובץ הזה אינו גיבוי של Cartly.', restoreOk: 'השחזור הצליח.', orderT: 'סדר המחלקות (לפי המסלול בסופר)', resetOrder: 'חזרה לסדר הרגיל', up: 'למעלה', down: 'למטה', confirmAll: 'למחוק את כל הרשימה?', confirmBought: 'להסיר את כל הפריטים שנקנו?',
+      clearAll: 'מחק את כל הרשימה', mineT: 'המוצרים שלי', mineTag: 'שלי', mineEmpty: 'עדיין לא הוספתם מוצרים משלכם. כל מוצר שתוסיפו ושלא מופיע בהשלמה האוטומטית יישמר כאן ויוצע לכם בפעם הבאה.', mineDel: 'הסר מהמוצרים שלי', backupT: 'גיבוי ושחזור', backup: 'גיבוי', restore: 'שחזור', backupHint: 'הגיבוי שומר הכל: הרשימה, המוצרים שלי, ההערה וההגדרות. שלחו את הקובץ לעצמכם (וואטסאפ, מייל או Drive), ובטלפון חדש לחצו "שחזור" ובחרו אותו.', restoreAsk: 'לשחזר מהגיבוי? כל מה שיש כרגע ב-Cartly יוחלף.', restoreBad: 'הקובץ הזה אינו גיבוי של Cartly.', restoreOk: 'השחזור הצליח.', savedDl: 'קובץ הגיבוי {f} נשמר בתיקיית ההורדות (Downloads).', orderT: 'סדר המחלקות (לפי המסלול בסופר)', resetOrder: 'חזרה לסדר הרגיל', up: 'למעלה', down: 'למטה', confirmAll: 'למחוק את כל הרשימה?', confirmBought: 'להסיר את כל הפריטים שנקנו?',
       pickDept: 'לאיזו מחלקה להוסיף?', cancel: 'ביטול',
       edit: 'עריכת פריט', names: 'שם הפריט', qty: 'כמות', unitT: 'יחידה', deptT: 'מחלקה', remove: 'הסר מהרשימה',
       waTitle: 'רשימת קניות – Cartly', waNote: 'הערה:', nothing: 'אין פריטים לשליחה.',
@@ -246,7 +246,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       empty: 'Your list is empty.\nType a product name above to start.',
       emptyFilter: 'No items in this department.',
       settings: 'Settings', done: 'Done', lang: 'Language', mode: 'Display', day: 'Day', night: 'Night', color: 'Color',
-      clearAll: 'Delete the whole list', mineT: 'My items', mineTag: 'Mine', mineEmpty: 'You have not added items of your own yet. Every item you add that is not in the autofill list is saved here and suggested next time.', mineDel: 'Remove from my items', backupT: 'Backup & restore', backup: 'Backup', restore: 'Restore', backupHint: 'The backup saves everything: your list, my items, the note and settings. Send the file to yourself (WhatsApp, email or Drive), and on a new phone tap "Restore" and pick it.', restoreAsk: 'Restore from backup? Everything currently in Cartly will be replaced.', restoreBad: 'This file is not a Cartly backup.', restoreOk: 'Restore completed.', orderT: 'Department order (your store route)', resetOrder: 'Reset to default order', up: 'Move up', down: 'Move down', confirmAll: 'Delete the whole list?', confirmBought: 'Remove all bought items?',
+      clearAll: 'Delete the whole list', mineT: 'My items', mineTag: 'Mine', mineEmpty: 'You have not added items of your own yet. Every item you add that is not in the autofill list is saved here and suggested next time.', mineDel: 'Remove from my items', backupT: 'Backup & restore', backup: 'Backup', restore: 'Restore', backupHint: 'The backup saves everything: your list, my items, the note and settings. Send the file to yourself (WhatsApp, email or Drive), and on a new phone tap "Restore" and pick it.', restoreAsk: 'Restore from backup? Everything currently in Cartly will be replaced.', restoreBad: 'This file is not a Cartly backup.', restoreOk: 'Restore completed.', savedDl: 'The backup file {f} was saved to your Downloads folder.', orderT: 'Department order (your store route)', resetOrder: 'Reset to default order', up: 'Move up', down: 'Move down', confirmAll: 'Delete the whole list?', confirmBought: 'Remove all bought items?',
       pickDept: 'Which department?', cancel: 'Cancel',
       edit: 'Edit item', names: 'Item name', qty: 'Quantity', unitT: 'Unit', deptT: 'Department', remove: 'Remove from list',
       waTitle: 'Shopping list – Cartly', waNote: 'Note:', nothing: 'No items to send.',
@@ -578,18 +578,25 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   // ---------- backup / restore ----------
   function doBackup() {
     var day = new Date().toISOString().slice(0, 10);
-    var name = 'cartly-backup-' + day + '.json';
+    // .txt / text/plain: Android only allows sharing certain file types (JSON is not one of them)
+    var name = 'cartly-backup-' + day + '.txt';
     var text = JSON.stringify({ app: 'cartly', v: 1, date: day, data: S });
     var file;
-    try { file = new File([text], name, { type: 'application/json' }); } catch (e) {}
+    try { file = new File([text], name, { type: 'text/plain' }); } catch (e) {}
     if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-      navigator.share({ files: [file], title: 'Cartly backup' }).catch(function () {});
+      navigator.share({ files: [file], title: 'Cartly backup' }).catch(function (err) {
+        if (!err || err.name !== 'AbortError') download(name, text);
+      });
       return;
     }
+    download(name, text);
+  }
+  function download(name, text) {
     var a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+    a.href = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
     a.download = name; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    alert(t().savedDl.replace('{f}', name));
   }
   function doRestore(file) {
     var r = new FileReader();
