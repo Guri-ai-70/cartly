@@ -1,6 +1,6 @@
 // Cartly service worker – makes the app work offline.
 // When you change any file, raise the version number below so phones get the update.
-const CACHE = 'cartly-v8';
+const CACHE = 'cartly-v10';
 const FILES = ['./', './index.html', './items.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -11,6 +11,8 @@ self.addEventListener('activate', e => {
 });
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  const u = e.request.url;
+  if (!u.startsWith(self.location.origin) && !u.includes('fonts.g')) return; // e.g. translation – always online
   e.respondWith(
     caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
       const url = e.request.url;

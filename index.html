@@ -36,7 +36,8 @@ h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.5px}
 .count{margin:2px 0 0;font-size:14px;color:var(--mute)}
 .icon-btn{width:44px;height:44px;border-radius:22px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;padding:0}
 
-.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 16px 10px}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 16px 8px}
+.top2{padding:0 16px 10px}
 .search{position:relative}
 .search-box{height:52px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;gap:10px;padding:0 14px}
 .search-box:focus-within{border:2px solid var(--accent-text);padding:0 13px}
@@ -53,7 +54,7 @@ h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.5px}
 .tag.o{background:transparent;border:1px solid var(--line);color:var(--mute)}
 .sug.new{color:var(--accent-text);font-weight:500;justify-content:flex-start}
 
-.note{margin-top:10px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;padding:12px 14px}
+.note{margin-top:2px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:flex;align-items:flex-start;gap:10px;padding:12px 14px}
 .note svg{flex:none;margin-top:2px;color:var(--mute)}
 .note textarea{flex:1;border:0;outline:none;background:transparent;resize:none;font-size:15px;line-height:1.4;min-height:22px;max-height:120px;padding:0}
 .note textarea::placeholder{color:var(--mute)}
@@ -111,6 +112,18 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
 .help b{display:block;font-size:16px;margin-bottom:2px}
 .help p{margin:0;font-size:15px;line-height:1.5;color:var(--mute)}
 .help .n{flex:none;width:28px;height:28px;border-radius:14px;background:var(--accent);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.order{background:var(--chip);border-radius:14px;overflow:hidden}
+.order-row{display:flex;align-items:center;gap:8px;padding:2px 6px 2px 14px;min-height:46px}
+[dir="rtl"] .order-row{padding:2px 14px 2px 6px}
+.order-row+.order-row{border-top:1px solid var(--line)}
+.order-row span{flex:1;font-size:15px}
+.order-row .num{flex:none;width:22px;color:var(--mute);font-size:13px}
+.mv{width:42px;height:42px;border:0;border-radius:10px;background:transparent;display:flex;align-items:center;justify-content:center;padding:0}
+.mv:disabled{opacity:.25;cursor:default}
+.names{display:flex;flex-direction:column;gap:8px}
+.names label{display:flex;align-items:center;gap:10px;height:48px;border-radius:12px;background:var(--chip);padding:0 12px}
+.names span{flex:none;width:56px;font-size:13px;color:var(--mute)}
+.names input{flex:1;min-width:0;border:0;outline:none;background:transparent;font-size:16px}
 .ver{font-size:12px;color:var(--mute);text-align:center}
 </style>
 </head>
@@ -140,6 +153,8 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       </div>
       <div class="sugs" id="sugs" hidden></div>
     </div>
+  </div>
+  <div class="top2">
     <label class="note">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
       <span class="sr" id="noteLabel"></span>
@@ -167,7 +182,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   'use strict';
 
   // ---------- constants ----------
-  var DEPTS = ['g', 'v', 'd', 'y', 'm', 's', 'c'];
+  var DEPTS = ['g', 'v', 'd', 'y', 'm', 'z', 's', 'c'];
   var ACCENTS = [
     { c: '#2F7D4F', light: '#6CC28E', he: 'ירוק', en: 'Green' },
     { c: '#2563A8', light: '#86B6EE', he: 'כחול', en: 'Blue' },
@@ -179,7 +194,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   var T = {
     he: {
       dir: 'rtl',
-      dept: { g: 'מכולת', v: 'ירקות ופירות', d: 'משקאות', y: 'מוצרי חלב', m: 'בשר ודגים', s: 'תבלינים', c: 'טואלטיקה וניקיון' },
+      dept: { g: 'מכולת', v: 'ירקות ופירות', d: 'משקאות', y: 'מוצרי חלב', m: 'בשר ודגים', z: 'מוקפאים', s: 'תבלינים', c: 'טואלטיקה וניקיון' },
       unit: { u: 'יח׳', kg: 'ק״ג', g: 'גרם', pk: 'מארז' },
       all: 'הכל', items: 'פריטים', bought: 'נקנו',
       addLabel: 'הוסף פריט', addPh: 'הוסף פריט… למשל: עגבניה',
@@ -190,27 +205,27 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       empty: 'הרשימה ריקה.\nהקלד שם של מוצר בשורה למעלה כדי להתחיל.',
       emptyFilter: 'אין פריטים במחלקה הזו.',
       settings: 'הגדרות', done: 'סיום', lang: 'שפה', mode: 'תצוגה', day: 'יום', night: 'לילה', color: 'צבע',
-      clearAll: 'מחק את כל הרשימה', confirmAll: 'למחוק את כל הרשימה?', confirmBought: 'להסיר את כל הפריטים שנקנו?',
+      clearAll: 'מחק את כל הרשימה', orderT: 'סדר המחלקות (לפי המסלול בסופר)', resetOrder: 'חזרה לסדר הרגיל', up: 'למעלה', down: 'למטה', confirmAll: 'למחוק את כל הרשימה?', confirmBought: 'להסיר את כל הפריטים שנקנו?',
       pickDept: 'לאיזו מחלקה להוסיף?', cancel: 'ביטול',
-      edit: 'עריכת פריט', qty: 'כמות', unitT: 'יחידה', deptT: 'מחלקה', remove: 'הסר מהרשימה',
+      edit: 'עריכת פריט', names: 'שם הפריט', qty: 'כמות', unitT: 'יחידה', deptT: 'מחלקה', remove: 'הסר מהרשימה',
       waTitle: 'רשימת קניות – Cartly', waNote: 'הערה:', nothing: 'אין פריטים לשליחה.',
       version: 'גרסה 1.0',
       help: 'איך משתמשים',
       helpItems: [
         ['הוספת פריט', 'הקלידו כמה אותיות (למשל עג) ובחרו מהרשימה. הפריט נכנס לבד למחלקה וליחידה הנכונות. מוצר שלא מופיע ברשימה – לחצו "הוסף כפריט חדש" ובחרו מחלקה.'],
         ['כמות', 'לחצו + או −. במשקל כל לחיצה מוסיפה או מורידה 100 גרם (גם כשהיחידה היא ק״ג). ביחידות ובמארזים – אחד בכל לחיצה. מינוס מתחת למינימום משאיר את הפריט ללא כמות.'],
-        ['עריכת פריט', 'לחיצה על שם הפריט פותחת עריכה: כמות, יחידה, מחלקה, "ללא כמות" או הסרה מהרשימה.'],
+        ['עריכת פריט', 'לחיצה על שם הפריט פותחת עריכה: שם בעברית ובאנגלית, כמות, יחידה, מחלקה, "ללא כמות" או הסרה מהרשימה. מוצר שהוספתם בעצמכם מתורגם אוטומטית כשיש אינטרנט, ואפשר לתקן את התרגום כאן.'],
         ['בזמן הקנייה', 'לחיצה על העיגול מסמנת שהפריט נקנה – הוא נמחק בקו ויורד לתחתית. "נקה נקנו" מסיר את כל מה שנקנה.'],
         ['הערה לקונה', 'כתבו בשדה ההערה מה שחשוב (למשל "לבדוק תאריכי תפוגה"). ההערה נשלחת בראש הודעת הוואטסאפ.'],
         ['שליחה בוואטסאפ', 'הכפתור "שלח בוואטסאפ" שולח את ההערה ואת הפריטים שעוד לא נקנו, מסודרים לפי מחלקות.'],
         ['סינון לפי מחלקה', 'כפתורי המחלקות מציגים מחלקה אחת בלבד. "הכל" מחזיר את כל הרשימה.'],
-        ['הגדרות', 'בגלגל השיניים: שפה, מצב יום/לילה, צבע, ומחיקת כל הרשימה.'],
+        ['הגדרות', 'בגלגל השיניים: שפה, מצב יום/לילה, צבע, סדר המחלקות לפי המסלול שלכם בסופר, ומחיקת כל הרשימה.'],
         ['שמירה', 'הרשימה נשמרת בטלפון שלכם ועובדת גם בלי אינטרנט.']
       ]
     },
     en: {
       dir: 'ltr',
-      dept: { g: 'Grocery', v: 'Fruit & Veg', d: 'Drinks', y: 'Dairy', m: 'Meat & Fish', s: 'Spices', c: 'Toiletries & Cleaning' },
+      dept: { g: 'Grocery', v: 'Fruit & Veg', d: 'Drinks', y: 'Dairy', m: 'Meat & Fish', z: 'Frozen', s: 'Spices', c: 'Toiletries & Cleaning' },
       unit: { u: 'pcs', kg: 'kg', g: 'g', pk: 'pack' },
       all: 'All', items: 'items', bought: 'bought',
       addLabel: 'Add item', addPh: 'Add item… e.g. Tomato',
@@ -221,21 +236,21 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       empty: 'Your list is empty.\nType a product name above to start.',
       emptyFilter: 'No items in this department.',
       settings: 'Settings', done: 'Done', lang: 'Language', mode: 'Display', day: 'Day', night: 'Night', color: 'Color',
-      clearAll: 'Delete the whole list', confirmAll: 'Delete the whole list?', confirmBought: 'Remove all bought items?',
+      clearAll: 'Delete the whole list', orderT: 'Department order (your store route)', resetOrder: 'Reset to default order', up: 'Move up', down: 'Move down', confirmAll: 'Delete the whole list?', confirmBought: 'Remove all bought items?',
       pickDept: 'Which department?', cancel: 'Cancel',
-      edit: 'Edit item', qty: 'Quantity', unitT: 'Unit', deptT: 'Department', remove: 'Remove from list',
+      edit: 'Edit item', names: 'Item name', qty: 'Quantity', unitT: 'Unit', deptT: 'Department', remove: 'Remove from list',
       waTitle: 'Shopping list – Cartly', waNote: 'Note:', nothing: 'No items to send.',
       version: 'Version 1.0',
       help: 'How to use',
       helpItems: [
         ['Add an item', 'Type a few letters (e.g. tom) and pick from the list. The item goes into the right department with the right unit. Not in the list? Tap "Add as a new item" and choose a department.'],
         ['Quantity', 'Tap + or −. Kg changes by 0.1, grams by 100, pieces and packs by 1. Going below the minimum leaves the item with no quantity.'],
-        ['Edit an item', 'Tap the item name to change quantity, unit or department, set "No quantity", or remove it.'],
+        ['Edit an item', 'Tap the item name to change its Hebrew/English name, quantity, unit or department, set "No quantity", or remove it. Items you add yourself are translated automatically when online – you can correct the translation here.'],
         ['While shopping', 'Tap the circle to mark an item as bought – it is crossed out and moves to the bottom. "Clear bought" removes all bought items.'],
         ['Note for the buyer', 'Write anything important in the note field (e.g. "buy before 6 pm"). It is sent at the top of the WhatsApp message.'],
         ['Send on WhatsApp', 'Sends the note and all items not yet bought, grouped by department.'],
         ['Filter by department', 'The department buttons show one department only. "All" shows the whole list.'],
-        ['Settings', 'The gear: language, day/night, color, and delete the whole list.'],
+        ['Settings', 'The gear: language, day/night, color, department order to match your store route, and delete the whole list.'],
         ['Saved on your phone', 'Your list is saved on this phone and works without internet.']
       ]
     }
@@ -245,7 +260,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   var KEY = 'cartly.v1';
   var S = load();
   function load() {
-    var d = { lang: 'he', dark: false, accent: '#2F7D4F', items: [], note: '', filter: 'all', nextId: 1 };
+    var d = { lang: 'he', dark: false, accent: '#2F7D4F', items: [], note: '', filter: 'all', nextId: 1, order: DEPTS.slice() };
     try {
       var s = JSON.parse(localStorage.getItem(KEY) || 'null');
       if (s && typeof s === 'object') { for (var k in d) if (s[k] !== undefined) d[k] = s[k]; }
@@ -260,6 +275,9 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       if (e && x.en === x.he && e.en !== e.he) { x.en = e.en; x.d = e.d; if (x.u === 'u' && e.u !== 'u') { x.u = e.u; } }
     });
     if (d.filter === 'f') d.filter = 'm';
+    // keep the user's department order valid (drop unknown, add new departments at their default place)
+    d.order = (Array.isArray(d.order) ? d.order : []).filter(function (x, i, a) { return DEPTS.indexOf(x) >= 0 && a.indexOf(x) === i; });
+    DEPTS.forEach(function (x, i) { if (d.order.indexOf(x) < 0) d.order.splice(Math.min(i, d.order.length), 0, x); });
     return d;
   }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
@@ -279,6 +297,8 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   function norm(s) { return String(s).toLowerCase().replace(/[׳'"״]/g, '').trim(); }
   var CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
   var MINUS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+  var UP = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 15 12 9 18 15"/></svg>';
+  var DOWN = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
   var PLUS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
 
   // ---------- theme / language ----------
@@ -313,14 +333,14 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     $('clearBought').disabled = bought === 0;
 
     // chips
-    var chips = [{ id: 'all', label: L.all }].concat(DEPTS.map(function (d) { return { id: d, label: L.dept[d] }; }));
+    var chips = [{ id: 'all', label: L.all }].concat(S.order.map(function (d) { return { id: d, label: L.dept[d] }; }));
     $('chips').innerHTML = chips.map(function (c) {
       return '<button class="chip' + (S.filter === c.id ? ' on' : '') + '" data-filter="' + c.id + '" aria-pressed="' + (S.filter === c.id) + '">' + esc(c.label) + '</button>';
     }).join('');
 
     // list
     var html = '';
-    var shown = DEPTS.filter(function (d) { return S.filter === 'all' || S.filter === d; });
+    var shown = S.order.filter(function (d) { return S.filter === 'all' || S.filter === d; });
     shown.forEach(function (d) {
       var list = S.items.filter(function (x) { return x.d === d; });
       if (!list.length) return;
@@ -355,10 +375,38 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       exist.b = false;
       exist.q = exist.q == null ? defQty(exist.u) : rq(exist.q + stepFor(exist.u));
     } else {
-      S.items.push({ id: S.nextId++, he: src.he, en: src.en, d: src.d, u: src.u, q: defQty(src.u), b: false });
+      exist = { id: S.nextId++, he: src.he, en: src.en, d: src.d, u: src.u, q: defQty(src.u), b: false };
+      S.items.push(exist);
     }
     if (S.filter !== 'all' && S.filter !== src.d) S.filter = 'all';
     save(); render();
+    return exist;
+  }
+
+  // ---------- auto-translation (only for items typed by hand; needs internet) ----------
+  var HEB = /[\u0590-\u05FF]/;
+  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+  function translate(text, toEn) {
+    var sl = toEn ? 'iw' : 'en', tl = toEn ? 'en' : 'iw';
+    var g = 'https://translate.googleapis.com/translate_a/single?client=gtx&dt=t&sl=' + sl + '&tl=' + tl + '&q=' + encodeURIComponent(text);
+    var m = 'https://api.mymemory.translated.net/get?langpair=' + (toEn ? 'he|en' : 'en|he') + '&q=' + encodeURIComponent(text);
+    function ok(r) { r = (r || '').trim(); return r && r.toLowerCase() !== text.toLowerCase() && !/MYMEMORY|WARNING|QUERY LENGTH/i.test(r) ? r : null; }
+    return fetch(g).then(function (res) { return res.json(); }).then(function (j) {
+      var r = ok((j[0] || []).map(function (x) { return x[0]; }).join(''));
+      if (!r) throw 0; return r;
+    }).catch(function () {
+      return fetch(m).then(function (res) { return res.json(); }).then(function (j) { return ok(j && j.responseData && j.responseData.translatedText); });
+    }).catch(function () { return null; });
+  }
+  // fill in the missing language for an item typed by hand
+  function autoTranslate(it) {
+    if (!it || it.he !== it.en || !navigator.onLine) return;
+    var toEn = HEB.test(it.he), src = it.he;
+    translate(src, toEn).then(function (r) {
+      if (!r || it.he !== it.en || it.he !== src) return;   // user changed it meanwhile
+      if (toEn) it.en = cap(r); else it.he = r;
+      save(); render();
+    });
   }
 
   // ---------- autofill ----------
@@ -434,6 +482,12 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
         '<button data-dark="0" class="' + (!S.dark ? 'on' : '') + '">' + L.day + '</button>' +
         '<button data-dark="1" class="' + (S.dark ? 'on' : '') + '">' + L.night + '</button></div></div>' +
       '<div class="field"><h3>' + L.color + '</h3><div class="swatches">' + sw + '</div></div>' +
+      '<div class="field"><h3>' + L.orderT + '</h3><div class="order">' +
+        S.order.map(function (d, i) {
+          return '<div class="order-row"><span class="num">' + (i + 1) + '</span><span>' + esc(L.dept[d]) + '</span>' +
+            '<button class="mv" data-move="' + d + '" data-dir="-1" aria-label="' + L.up + '"' + (i === 0 ? ' disabled' : '') + '>' + UP + '</button>' +
+            '<button class="mv" data-move="' + d + '" data-dir="1" aria-label="' + L.down + '"' + (i === S.order.length - 1 ? ' disabled' : '') + '>' + DOWN + '</button></div>';
+        }).join('') + '</div><button class="link" data-resetorder="1" style="margin-top:4px">' + L.resetOrder + '</button></div>' +
       '<button class="danger" data-clearall="1">' + L.clearAll + '</button>' +
       '<div class="ver">Cartly · ' + L.version + '</div>'
     );
@@ -454,7 +508,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     openSheet(
       '<div class="sheet-head"><h2>' + esc(q) + '</h2><button class="link" data-close="1">' + L.cancel + '</button></div>' +
       '<div class="field"><h3>' + L.pickDept + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
-      DEPTS.map(function (d) { return '<button data-newdept="' + d + '">' + esc(L.dept[d]) + '</button>'; }).join('') +
+      S.order.map(function (d) { return '<button data-newdept="' + d + '">' + esc(L.dept[d]) + '</button>'; }).join('') +
       '</div></div>'
     );
     $('overlay').dataset.newname = q;
@@ -465,6 +519,9 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     var L = t();
     openSheet(
       '<div class="sheet-head"><h2>' + esc(nameOf(it)) + '</h2><button class="link" data-close="1">' + L.done + '</button></div>' +
+      '<div class="field"><h3>' + L.names + '</h3><div class="names">' +
+        '<label><span>עברית</span><input id="nameHe" dir="rtl" value="' + esc(it.he) + '"></label>' +
+        '<label><span>English</span><input id="nameEn" dir="ltr" value="' + esc(it.en) + '"></label></div></div>' +
       '<div class="field"><h3>' + L.qty + '</h3><div class="big-stepper">' +
         '<button class="step" data-edit="dec" aria-label="−">' + MINUS + '</button>' +
         '<span class="qty' + (it.q == null ? ' none' : '') + '" id="editQty">' + esc(fmtQty(it)) + '</span>' +
@@ -473,7 +530,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       '<div class="field"><h3>' + L.unitT + '</h3><div class="seg" style="grid-template-columns:repeat(4,minmax(0,1fr))">' +
         UNITS.map(function (u) { return '<button data-unit="' + u + '" class="' + (it.u === u ? 'on' : '') + '">' + L.unit[u] + '</button>'; }).join('') + '</div></div>' +
       '<div class="field"><h3>' + L.deptT + '</h3><div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">' +
-        DEPTS.map(function (d) { return '<button data-dept="' + d + '" class="' + (it.d === d ? 'on' : '') + '">' + esc(L.dept[d]) + '</button>'; }).join('') + '</div></div>' +
+        S.order.map(function (d) { return '<button data-dept="' + d + '" class="' + (it.d === d ? 'on' : '') + '">' + esc(L.dept[d]) + '</button>'; }).join('') + '</div></div>' +
       '<button class="danger" data-remove="1">' + L.remove + '</button>'
     );
     $('overlay').dataset.editid = id;
@@ -485,7 +542,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     var lines = ['*' + L.waTitle + '*'];
     if (S.note.trim()) lines.push('', L.waNote + ' ' + S.note.trim());
     var any = false;
-    DEPTS.forEach(function (d) {
+    S.order.forEach(function (d) {
       var list = S.items.filter(function (x) { return x.d === d && !x.b; });
       if (!list.length) return;
       any = true;
@@ -565,10 +622,24 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
   $('openHelp').addEventListener('click', openHelp);
 
   $('overlay').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-close],[data-lang],[data-dark],[data-accent],[data-clearall],[data-newdept],[data-edit],[data-unit],[data-dept],[data-remove]');
+    var b = e.target.closest('[data-move],[data-resetorder],[data-close],[data-lang],[data-dark],[data-accent],[data-clearall],[data-newdept],[data-edit],[data-unit],[data-dept],[data-remove]');
     if (!b) return;
     var ov = $('overlay');
     if (b.dataset.close) { closeSheet(); return; }
+    if (b.dataset.move) {
+      var i = S.order.indexOf(b.dataset.move), j = i + (+b.dataset.dir);
+      if (j < 0 || j >= S.order.length) return;
+      S.order.splice(j, 0, S.order.splice(i, 1)[0]);
+      var sheetEl = ov.querySelector('.sheet'), top = sheetEl ? sheetEl.scrollTop : 0;
+      save(); render(); openSettings();
+      var ns = ov.querySelector('.sheet'); if (ns) ns.scrollTop = top;
+      return;
+    }
+    if (b.dataset.resetorder) {
+      var st = ov.querySelector('.sheet').scrollTop;
+      S.order = DEPTS.slice(); save(); render(); openSettings();
+      ov.querySelector('.sheet').scrollTop = st; return;
+    }
     if (b.dataset.lang) { S.lang = b.dataset.lang; save(); applyLang(); render(); openSettings(); return; }
     if (b.dataset.dark) { S.dark = b.dataset.dark === '1'; save(); applyTheme(); openSettings(); return; }
     if (b.dataset.accent) { S.accent = b.dataset.accent; save(); applyTheme(); openSettings(); return; }
@@ -578,7 +649,7 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     }
     if (b.dataset.newdept) {
       var nm = ov.dataset.newname;
-      addItem({ he: nm, en: nm, d: b.dataset.newdept, u: 'u' });
+      autoTranslate(addItem({ he: nm, en: nm, d: b.dataset.newdept, u: 'u' }));
       closeSheet(); return;
     }
     var it = find(+ov.dataset.editid); if (!it) { closeSheet(); return; }
@@ -590,11 +661,21 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
     else if (b.dataset.remove) { S.items = S.items.filter(function (x) { return x !== it; }); save(); render(); closeSheet(); return; }
     save(); render(); openEdit(it.id);
   });
+  $('overlay').addEventListener('change', function (e) {
+    if (e.target.id !== 'nameHe' && e.target.id !== 'nameEn') return;
+    var it = find(+$('overlay').dataset.editid); if (!it) return;
+    var v = e.target.value.trim(); if (!v) { e.target.value = e.target.id === 'nameHe' ? it.he : it.en; return; }
+    if (e.target.id === 'nameHe') it.he = v; else it.en = v;
+    save(); render();
+    var h = $('overlay').querySelector('.sheet-head h2'); if (h) h.textContent = nameOf(it);
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && $('overlay').innerHTML) closeSheet(); });
 
   // ---------- start ----------
   noteEl.value = S.note;
   applyTheme(); applyLang(); render(); fitNote();
+  S.items.forEach(function (x) { if (x.he === x.en) autoTranslate(x); });
+  window.addEventListener('online', function () { S.items.forEach(function (x) { if (x.he === x.en) autoTranslate(x); }); });
 
   if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
     navigator.serviceWorker.register('sw.js').catch(function () {});
