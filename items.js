@@ -225,9 +225,6 @@ g|u|עגבניות מיובשות|Sun-dried tomatoes
 g|u|רוטב עגבניות|Tomato sauce
 g|u|אבקת מרק|Soup powder
 g|pk|תה|Tea
-g|u|קפה|Coffee
-g|u|קפה נמס|Instant coffee
-g|u|קפה טורקי|Turkish coffee
 g|u|קפה שחור עלית|Elite Black Coffee
 g|u|קפה שחור עם הל עלית|Elite Black Coffee with Cardamom
 g|u|קפה טורקי עם הל אל נח׳לה|Al Nakhla Turkish Coffee with Cardamom
@@ -333,6 +330,9 @@ m|kg|כבד עוף|Chicken liver
 m|kg|לבבות עוף|Chicken hearts
 m|kg|שניצל|Schnitzel
 m|kg|עוף טחון|Ground chicken
+m|kg|פרגית טחונה|Ground chicken thigh
+m|kg|ירכיים|Chicken thighs
+m|kg|שווארמה|Shawarma meat
 m|kg|חזה הודו|Turkey breast
 m|kg|שוק הודו|Turkey drumstick
 m|kg|בשר טחון|Ground beef
@@ -340,6 +340,11 @@ m|kg|אנטריקוט|Entrecote (ribeye)
 m|kg|סינטה|Sirloin
 m|kg|פילה בקר|Beef fillet
 m|kg|צלי כתף|Shoulder roast
+m|kg|שייטל|Beef rump (Shaitel)
+m|kg|צוואר בקר|Beef neck
+m|kg|כתף בקר|Beef shoulder
+m|kg|חזה בקר|Beef brisket
+m|kg|כבד בקר|Beef liver
 m|kg|בשר לגולאש|Goulash beef
 m|kg|אסאדו|Asado (short ribs)
 m|kg|צלעות טלה|Lamb chops
