@@ -450,9 +450,9 @@ footer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--
       if (he.indexOf(n) === 0 || en.indexOf(n) === 0) score = 0;
       else if ((' ' + he).indexOf(' ' + n) >= 0 || (' ' + en).indexOf(' ' + n) >= 0) score = 1;
       else if (he.indexOf(n) >= 0 || en.indexOf(n) >= 0) score = 2;
-      if (score >= 0) res.push({ e: e, s: score });
+      if (score >= 0) res.push({ e: e, s: score, l: he.indexOf(n) >= 0 ? he.length : en.length });
     });
-    res.sort(function (a, b) { return a.s - b.s || (b.e.own ? 1 : 0) - (a.e.own ? 1 : 0) || a.e.he.length - b.e.he.length; });
+    res.sort(function (a, b) { return a.s - b.s || (b.e.own ? 1 : 0) - (a.e.own ? 1 : 0) || a.l - b.l; });
     return res.slice(0, 6).map(function (r) { return r.e; });
   }
   function highlight(name, q) {

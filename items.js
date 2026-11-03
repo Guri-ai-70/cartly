@@ -197,7 +197,7 @@ g|u|קפה|Coffee
 g|u|קפה נמס|Instant coffee
 g|u|קפה טורקי|Turkish coffee
 g|pk|קפסולות קפה|Coffee capsules
-g|u|טונה|Tuna
+g|u|טונה שימורים|Canned tuna
 g|u|תירס שימורים|Canned corn
 g|u|חומוס שימורים|Canned chickpeas
 g|u|זיתים|Olives
@@ -328,8 +328,10 @@ m|kg|לוקוס|Grouper
 m|kg|קרפיון|Common Carp
 m|kg|אינטיאס|Common Dentex
 m|kg|פילה בקלה|Cod fillet
+m|kg|מרלוזה / הייק|Hake
 m|kg|פילה הייק|Hake fillet
-m|kg|נסיכת הנילוס|Nile perch
+m|kg|טונה|Tuna
+m|kg|נסיכת הנילוס|Nile Perch
 m|kg|טרוטה|Trout
 m|kg|מקרל|Mackerel
 m|kg|סרדינים|Sardines
