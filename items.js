@@ -319,13 +319,14 @@ m|g|פסטרמה הודו|Turkey pastrami
 m|kg|סלמון|Salmon
 m|g|פילה סלמון|Salmon fillet
 m|g|סלמון מעושן|Smoked salmon
-m|kg|אמנון|Tilapia
+m|kg|אמנון (מושט)|Tilapia
 m|kg|פילה אמנון|Tilapia fillet
-m|kg|דניס|Sea bream
-m|kg|לברק|Sea bass
-m|kg|בורי|Mullet
+m|kg|דניס|Gilt-head Sea Bream
+m|kg|לברק|European Sea Bass
+m|kg|בורי|Grey Mullet
 m|kg|לוקוס|Grouper
-m|kg|קרפיון|Carp
+m|kg|קרפיון|Common Carp
+m|kg|אינטיאס|Common Dentex
 m|kg|פילה בקלה|Cod fillet
 m|kg|פילה הייק|Hake fillet
 m|kg|נסיכת הנילוס|Nile perch
