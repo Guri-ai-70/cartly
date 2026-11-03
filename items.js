@@ -146,6 +146,11 @@ g|u|לחם|Bread
 g|u|לחם אחיד|Standard bread
 g|u|לחם מלא|Whole wheat bread
 g|u|לחם שיפון|Rye bread
+g|u|לחם כוסמין|Spelt Bread
+g|u|לחם מחמצת|Sourdough Bread
+g|u|לחם דגנים|Multigrain Bread
+g|u|לחם קל|Light Bread
+g|u|לחם ללא גלוטן|Gluten-Free Bread
 g|u|לחם פרוס|Sliced bread
 g|u|חלה|Challah
 g|pk|פיתות|Pitas
