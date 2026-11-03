@@ -170,8 +170,23 @@ g|u|עדשים|Lentils
 g|u|עדשים כתומות|Red lentils
 g|u|חומוס יבש|Dried chickpeas
 g|u|שעועית לבנה|White beans
-g|u|קמח|Flour
-g|u|קמח מלא|Whole wheat flour
+g|u|קמח לבן|White Flour
+g|u|קמח תופח|Self-Rising Flour
+g|u|קמח 00 (לפיצה)|00 Flour (Pizza)
+g|u|קמח לחם|Bread Flour
+g|u|קמח מלא|Whole Wheat Flour
+g|u|קמח כוסמין|Spelt Flour
+g|u|קמח כוסמין מלא|Whole Spelt Flour
+g|u|קמח שיפון|Rye Flour
+g|u|קמח תירס|Corn Flour
+g|u|קורנפלור|Cornstarch
+g|u|קמח אורז|Rice Flour
+g|u|קמח שקדים|Almond Flour
+g|u|קמח חומוס|Chickpea Flour
+g|u|קמח שיבולת שועל|Oat Flour
+g|u|קמח ללא גלוטן|Gluten-Free Flour
+g|u|סולת|Semolina
+g|u|קמח מצה|Matzah Meal
 g|u|סוכר|Sugar
 g|u|סוכר חום|Brown sugar
 g|u|אבקת סוכר|Powdered sugar

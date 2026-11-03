@@ -1,6 +1,6 @@
 // Cartly service worker – makes the app work offline.
 // When you change any file, raise the version number below so phones get the update.
-const CACHE = 'cartly-v15';
+const CACHE = 'cartly-v16';
 const FILES = ['./', './index.html', './items.js', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
