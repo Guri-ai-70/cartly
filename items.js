@@ -101,17 +101,34 @@ y|u|חלב סויה|Soy milk
 y|u|חלב שקדים|Almond milk
 y|u|חלב שיבולת שועל|Oat milk
 y|u|שוקו|Chocolate milk
-y|u|גבינה לבנה|White cheese
-y|u|קוטג׳|Cottage cheese
-y|u|גבינה צהובה|Yellow cheese
+y|u|גבינה לבנה|White Cheese (Quark)
+y|u|קוטג׳|Cottage Cheese
+y|u|גבינת שמנת|Cream Cheese
+y|u|לאבנה|Labneh
+y|u|ריקוטה|Ricotta
+y|u|גבינה בולגרית|Bulgarian Cheese
+y|u|פטה|Feta
+y|u|צפתית|Tzfatit (Safed Cheese)
+y|u|בוראטה|Burrata
+y|u|מוצרלה טרייה|Fresh Mozzarella
+y|u|גבינה צהובה (עמק / גלבוע)|Yellow Cheese (Gouda-style)
 y|pk|גבינה צהובה פרוסה|Sliced yellow cheese
-y|u|גבינת שמנת|Cream cheese
-y|u|גבינה בולגרית|Bulgarian cheese
-y|u|גבינת פטה|Feta cheese
-y|u|מוצרלה|Mozzarella
 y|pk|גבינה מגוררת|Grated cheese
+y|u|גאודה|Gouda
+y|u|אדם|Edam
+y|u|מוצרלה (לפיצה)|Mozzarella
+y|u|צ׳דר|Cheddar
+y|u|אמנטל|Emmental
 y|u|פרמזן|Parmesan
-y|u|לבנה|Labneh
+y|u|פקורינו|Pecorino
+y|u|חלומי|Halloumi
+y|u|קשקבל|Kashkaval
+y|u|ברי|Brie
+y|u|קממבר|Camembert
+y|u|רוקפור / גבינה כחולה|Roquefort / Blue Cheese
+y|u|גורגונזולה|Gorgonzola
+y|u|גבינת עזים|Goat Cheese
+y|u|גבינת כבשים|Sheep Cheese
 y|u|יוגורט|Yogurt
 y|u|יוגורט יווני|Greek yogurt
 y|u|מעדן|Pudding
