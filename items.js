@@ -228,6 +228,10 @@ g|pk|תה|Tea
 g|u|קפה|Coffee
 g|u|קפה נמס|Instant coffee
 g|u|קפה טורקי|Turkish coffee
+g|u|קפה שחור עלית|Elite Black Coffee
+g|u|קפה שחור עם הל עלית|Elite Black Coffee with Cardamom
+g|u|קפה טורקי עם הל אל נח׳לה|Al Nakhla Turkish Coffee with Cardamom
+g|u|קפה נמס עלית|Elite Instant Coffee
 g|pk|קפסולות קפה|Coffee capsules
 g|u|טונה שימורים|Canned tuna
 g|u|תירס שימורים|Canned corn
